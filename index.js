@@ -12,7 +12,7 @@ io.on('connection', async (socket) => {
             payload = JSON.parse(payload)
 
             const { roomName } = payload
-            await socket.join(roomName)
+            socket.join(roomName)
 
             socket.to(roomName).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
         } catch (error) {
@@ -25,7 +25,7 @@ io.on('connection', async (socket) => {
             payload = JSON.parse(payload)
 
             const { roomName } = payload
-            await socket.leave(roomName)
+            socket.leave(roomName)
         } catch (error) {
         }
     })
