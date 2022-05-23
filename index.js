@@ -9,15 +9,17 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('create-room', payload => {
-        console.log(payload)
         try {
             payload = JSON.parse(payload)
+            console.log(payload)
 
             const { roomName } = payload
+            console.log(roomName)
             socket.join(roomName)
 
             socket.to(roomName).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
         } catch (error) {
+            console.error(error)
             socket.to(roomName).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
         }
     })
