@@ -13,12 +13,13 @@ io.on('connection', (socket) => {
             payload = JSON.parse(payload)
 
             const { roomName } = payload
+
             socket.join(`${roomName}`)
 
             socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
         } catch (error) {
             console.error(error)
-            socket.to(roomName).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
+            socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
         }
     })
 
@@ -27,7 +28,7 @@ io.on('connection', (socket) => {
             payload = JSON.parse(payload)
 
             const { roomName } = payload
-            socket.leave(roomName)
+            socket.leave(`${roomName}`)
         } catch (error) {
         }
     })
