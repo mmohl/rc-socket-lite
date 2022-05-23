@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.on('create-room', payload => {
+    socket.on('make-room', payload => {
         try {
             payload = JSON.parse(payload)
 
@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('leave-room', (payload) => {
+    socket.on('quit-room', (payload) => {
         try {
             payload = JSON.parse(payload)
 
