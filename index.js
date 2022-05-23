@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     socket.on('create-room', payload => {
 
         try {
@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('leave-room', payload => {
+    socket.on('leave-room', async (payload) => {
         try {
             payload = JSON.parse(payload)
 
@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('listen-room', payload => {
+    socket.on('listen-room', async (payload) => {
         try {
             payload = JSON.parse(payload)
 
