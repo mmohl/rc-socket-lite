@@ -1,11 +1,7 @@
-const express = require("express");
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-const port = 3000;
-
-const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer, { cors: { origin: '*' } });
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http, { cors: { origin: '*' } });
+const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     res.json({ message: 'hai' })
@@ -51,6 +47,6 @@ io.on('connection', (socket) => {
     })
 });
 
-httpServer.listen(port, () => {
+http.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);
 });
