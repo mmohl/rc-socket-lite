@@ -1,14 +1,9 @@
-const fs = require('fs');
 const express = require('express');
 const app = express();
 const http = require('http');
-
-// var privateKey = fs.readFileSync('key.pem');
-// var certificate = fs.readFileSync('cert.pem');
-
-const server = http.createServer(app)
+const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server, { allowEIO3: true, path: '/rc-socket', cors: { origin: '*' } });
+const io = new Server(server, { cors: { origin: '*' } });
 
 app.get('/', (req, res) => {
     return res.json({ message: 'hello' })
