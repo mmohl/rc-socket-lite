@@ -16,6 +16,8 @@ io.on('connection', (socket) => {
 
             socket.join(`${roomName}`)
 
+            console.log('created')
+
             socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
         } catch (error) {
             console.error(error)
