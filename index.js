@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('create-room', payload => {
+        console.log(payload)
         try {
             payload = JSON.parse(payload)
 
