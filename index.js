@@ -9,20 +9,20 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('make-room', payload => {
-        try {
-            payload = JSON.parse(payload)
+        payload = JSON.parse(payload)
 
-            const { roomName } = payload
+        const { roomName } = payload
 
-            socket.join(`${roomName}`)
+        socket.join(`${roomName}`)
 
-            console.log('created')
+        console.log('created')
 
-            socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
-        } catch (error) {
-            console.error(error)
-            socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
-        }
+        socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
+        // try {
+        // } catch (error) {
+        //     console.error(error)
+        //     socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
+        // }
     })
 
     socket.on('quit-room', (payload) => {
