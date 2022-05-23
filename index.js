@@ -1,14 +1,18 @@
 const fs = require('fs');
 const express = require('express');
 const app = express();
-const https = require('https');
+const http = require('http');
 
-var privateKey = fs.readFileSync('key.pem');
-var certificate = fs.readFileSync('cert.pem');
+// var privateKey = fs.readFileSync('key.pem');
+// var certificate = fs.readFileSync('cert.pem');
 
-const server = https.createServer({ key: privateKey, cert: certificate }, app)
+const server = http.createServer(app)
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server, { cors: { origin: '*' } });
+
+app.get('/', (req, res) => {
+    return res.json({ message: 'hello' })
+})
 
 io.on('connection', async (socket) => {
     socket.on('create-room', payload => {
