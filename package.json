@@ -1,0 +1,16 @@
+{
+  "name": "rc-socket",
+  "version": "0.1.0",
+  "description": "simple rc socket application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "maulana@radio.cloud",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "pm2": "^5.2.0",
+    "socket-io": "^1.0.0"
+  }
+}
