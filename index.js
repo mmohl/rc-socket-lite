@@ -8,15 +8,14 @@ const http = require('http');
 
 const server = http.createServer(app)
 const { Server } = require("socket.io");
-const io = new Server(server, { cors: { origin: '*' } });
+const io = new Server(server, { path: '/rc-socket', cors: { origin: '*' } });
 
 app.get('/', (req, res) => {
     return res.json({ message: 'hello' })
 })
 
-io.on('connection', async (socket) => {
+io.on('connection', (socket) => {
     socket.on('create-room', payload => {
-
         try {
             payload = JSON.parse(payload)
 
@@ -29,7 +28,7 @@ io.on('connection', async (socket) => {
         }
     })
 
-    socket.on('leave-room', async (payload) => {
+    socket.on('leave-room', (payload) => {
         try {
             payload = JSON.parse(payload)
 
@@ -39,7 +38,7 @@ io.on('connection', async (socket) => {
         }
     })
 
-    socket.on('listen-room', async (payload) => {
+    socket.on('listen-room', (payload) => {
         try {
             payload = JSON.parse(payload)
 
