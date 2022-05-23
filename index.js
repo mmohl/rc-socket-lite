@@ -8,7 +8,7 @@ const http = require('http');
 
 const server = http.createServer(app)
 const { Server } = require("socket.io");
-const io = new Server(server, { path: '/rc-socket', cors: { origin: '*' } });
+const io = new Server(server, { allowEIO3: true, path: '/rc-socket', cors: { origin: '*' } });
 
 app.get('/', (req, res) => {
     return res.json({ message: 'hello' })
