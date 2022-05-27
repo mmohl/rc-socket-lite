@@ -9,21 +9,35 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('make-room', payload => {
+        console.log('from job')
+        console.log(payload)
+        // payload = JSON.parse(payload)
+        
+        // const { roomName } = payload
+        // io.sockets.adapter.rooms.get("room name")
+
+        // socket.join(`${roomName}`)
+
+        // console.log('created')
+
+        // socket.emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
+        // socket.emit(`listen-room`, 'hai')
+        // try {
+        // } catch (error) {
+        //     console.error(error)
+        //     socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
+        // }
+    })
+
+    socket.on('join', payload => {
         payload = JSON.parse(payload)
 
         const { roomName } = payload
 
         socket.join(`${roomName}`)
 
-        console.log('created')
-
-        socket.emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
-        socket.emit(`listen-room`, 'hai')
-        // try {
-        // } catch (error) {
-        //     console.error(error)
-        //     socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
-        // }
+        // socket.emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
+        socket.to(`${roomName}`).emit(`listen-room`, 'hai')
     })
 
     socket.on('quit-room', (payload) => {
