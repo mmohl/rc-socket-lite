@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log(socket?.adapter)
+    console.log(socket?.adapter?.rooms)
     socket.on('make-room', payload => {
         console.log(payload)
         // payload = JSON.parse(payload)
