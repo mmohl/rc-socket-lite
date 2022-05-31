@@ -8,20 +8,20 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+    console.log(socket)
     socket.on('make-room', payload => {
-        console.log('from job')
         console.log(payload)
         // payload = JSON.parse(payload)
         
-        // const { roomName } = payload
+        const { roomName } = payload
         // io.sockets.adapter.rooms.get("room name")
 
-        // socket.join(`${roomName}`)
+        socket.join(roomName)
 
         // console.log('created')
 
         // socket.emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
-        // socket.emit(`listen-room`, 'hai')
+        socket.to(roomName).emit(`listen-room`, 'hai')
         // try {
         // } catch (error) {
         //     console.error(error)
