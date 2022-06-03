@@ -3,10 +3,13 @@ const server = require('http').createServer(app);
 const options = { cors: { origin: '*' } };
 const io = require('socket.io')(server, options);
 const port = process.env.PORT || 3000;
+const redis = require('socket.io-redis');
 
 app.get('/', (req, res) => {
     res.json({ message: 'hai' })
 });
+
+io.adapter(redis(process.env.HEROKU_REDIS_COBALT_URL || 'redis://:p9b0431dbc26a3bb78405248f6c9ae30d722672c70a815ad301bd265020467bec@ec2-108-128-96-163.eu-west-1.compute.amazonaws.com:14429'));
 
 io.on('connection', (socket) => {
     console.log(socket?.adapter?.rooms)
