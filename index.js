@@ -57,8 +57,8 @@ io.on('connection', (socket) => {
         try {
             payload = JSON.parse(payload)
 
-            const { roomName, data } = payload
-            socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ data }))
+            const { roomName } = payload
+            socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ ...payload }))
         } catch (error) {
             console.log(error)
         }
