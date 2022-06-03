@@ -15,30 +15,31 @@ io.on('connection', (socket) => {
         // payload = JSON.parse(payload)
         
         const { roomName } = payload
+        console.log(roomName)
         // io.sockets.adapter.rooms.get("room name")
 
         socket.join(roomName)
 
-        // console.log('created')
 
         // socket.emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
-        socket.to(roomName).emit(`listen-room`, 'hai')
+        // socket.to(roomName).emit(`listen-room`, 'hai')
         // try {
         // } catch (error) {
         //     console.error(error)
         //     socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
         // }
+        socket.to(`${roomName}`).emit(`${roomName}-callback`, 'hai, it from server on created')
     })
 
     socket.on('join', payload => {
         payload = JSON.parse(payload)
-
+        console.log(roomName)
         const { roomName } = payload
 
         socket.join(`${roomName}`)
 
         // socket.emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
-        socket.to(`${roomName}`).emit(`listen-room`, 'hai')
+        socket.to(`${roomName}`).emit(`${roomName}-callback`, 'hai, it from server on join')
     })
 
     socket.on('quit-room', (payload) => {
