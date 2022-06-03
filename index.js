@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
         const { roomName } = payload
         socket.join(roomName)
 
-        let isRoomExists = io.sockets.adapter.rooms.get(roomName)
+        let isRoomExists = true
         socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: isRoomExists ? "success create room" : 'success join room'  }))
         // socket.to(roomName).emit(`listen-room`, 'hai')
         // try {
