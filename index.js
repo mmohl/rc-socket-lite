@@ -33,8 +33,8 @@ io.on('connection', (socket) => {
 
     socket.on('join', payload => {
         payload = JSON.parse(payload)
-        console.log(roomName)
         const { roomName } = payload
+        console.log(roomName)
 
         socket.join(`${roomName}`)
 
