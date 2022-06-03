@@ -45,8 +45,6 @@ io.on('connection', (socket) => {
 
     socket.on('quit-room', (payload) => {
         try {
-            payload = JSON.parse(payload)
-
             const { roomName } = payload
             socket.leave(`${roomName}`)
         } catch (error) {
@@ -55,8 +53,6 @@ io.on('connection', (socket) => {
 
     socket.on('listen-room', (payload) => {
         try {
-            payload = JSON.parse(payload)
-
             const { roomName } = payload
             socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ ...payload }))
         } catch (error) {
