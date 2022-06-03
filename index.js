@@ -9,29 +9,27 @@ app.get('/', (req, res) => {
     res.json({ message: 'hai' })
 });
 
-io.adapter(redis(process.env.HEROKU_REDIS_COBALT_URL || 'redis://:p9b0431dbc26a3bb78405248f6c9ae30d722672c70a815ad301bd265020467bec@ec2-108-128-96-163.eu-west-1.compute.amazonaws.com:14429'));
+io.adapter(redis(process.env.HEROKU_REDIS_COBALT_URL));
 
 io.on('connection', (socket) => {
-    console.log(socket?.adapter?.rooms)
+    // console.log(socket?.adapter?.rooms)
     socket.on('make-room', payload => {
+
         console.log(payload)
         // payload = JSON.parse(payload)
         
         const { roomName } = payload
-        console.log(roomName)
-        // io.sockets.adapter.rooms.get("room name")
-
         socket.join(roomName)
 
-
-        // socket.emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: "success create room" }))
+        let isRoomExists = io.sockets.adapter.rooms.get(roomName)
+        socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: isRoomExists ? "success create room" : 'success join room'  }))
         // socket.to(roomName).emit(`listen-room`, 'hai')
         // try {
         // } catch (error) {
         //     console.error(error)
         //     socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 0, message: "failed create room" }))
         // }
-        socket.to(`${roomName}`).emit(`${roomName}-callback`, 'hai, it from server on created')
+        // socket.to(`${roomName}`).emit(`${roomName}-callback`, 'hai, it from server on created')
     })
 
     socket.on('join', payload => {
@@ -60,7 +58,7 @@ io.on('connection', (socket) => {
             payload = JSON.parse(payload)
 
             const { roomName, data } = payload
-            socket.to(`${roomName}`).emit(data)
+            socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ data }))
         } catch (error) {
             console.log(error)
         }
