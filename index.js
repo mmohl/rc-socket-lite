@@ -54,6 +54,7 @@ io.on('connection', (socket) => {
     socket.on('listen-room', (payload) => {
         try {
             const { roomName } = payload
+            console.log(payload)
             socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ ...payload }))
         } catch (error) {
             console.log(error)
