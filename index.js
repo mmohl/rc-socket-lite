@@ -17,12 +17,12 @@ io.on('connection', (socket) => {
 
         console.log(payload)
         // payload = JSON.parse(payload)
-        
+
         const { roomName } = payload
         socket.join(roomName)
 
         let isRoomExists = true
-        socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: isRoomExists ? "success create room" : 'success join room'  }))
+        socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ status: 1, message: isRoomExists ? "success create room" : 'success join room' }))
         // socket.to(roomName).emit(`listen-room`, 'hai')
         // try {
         // } catch (error) {
@@ -54,6 +54,16 @@ io.on('connection', (socket) => {
     socket.on('listen-room', (payload) => {
         try {
             const { roomName } = payload
+            console.log(payload)
+            socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ ...payload }))
+        } catch (error) {
+            console.log(error)
+        }
+    })
+
+    socket.on('update-progress', (payload) => {
+        try {
+            const { roomName, progressValue } = payload
             console.log(payload)
             socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ ...payload }))
         } catch (error) {
