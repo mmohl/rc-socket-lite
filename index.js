@@ -4,6 +4,7 @@ const options = { cors: { origin: '*' } };
 const io = require('socket.io')(server, options);
 const port = process.env.PORT || 3000;
 const redis = require('socket.io-redis');
+const os = require('os')
 
 app.get('/', (req, res) => {
     res.json({ message: 'hai' })
@@ -48,6 +49,15 @@ io.on('connection', (socket) => {
             const { roomName } = payload
             socket.leave(`${roomName}`)
             socket.close()
+
+            let totalRAM = os.totalmem()
+            let totalMem = (totalRAM / (1024 * 1024))
+            console.log(`Total available RAM: ${totalMem}`)
+
+
+            let freeRAM = os.freemem()
+            let totalFreeMem = (freeRAM / (1024 * 1024))
+            console.log(`Total free system RAM: ${totalFreeMem}`)
         } catch (error) {
         }
     })
