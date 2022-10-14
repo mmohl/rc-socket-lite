@@ -76,6 +76,14 @@ io.on('connection', (socket) => {
         try {
             const { roomName, progressValue } = payload
             console.log(payload)
+            let totalRAM = os.totalmem()
+            let totalMem = (totalRAM / (1024 * 1024))
+            console.log(`Total available RAM: ${totalMem}`)
+
+
+            let freeRAM = os.freemem()
+            let totalFreeMem = (freeRAM / (1024 * 1024))
+            console.log(`Total free system RAM: ${totalFreeMem}`)
             socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ ...payload }))
         } catch (error) {
             console.log(error)
