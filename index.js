@@ -46,18 +46,19 @@ io.on('connection', (socket) => {
 
     socket.on('quit-room', (payload) => {
         try {
-            const { roomName } = payload
-            socket.leave(`${roomName}`)
-            socket.close()
+            console.log('quit triggered')
+            // const { roomName } = payload
+            // socket.leave(`${roomName}`)
+            // socket.close()
 
-            let totalRAM = os.totalmem()
-            let totalMem = (totalRAM / (1024 * 1024))
-            console.log(`Total available RAM: ${totalMem}`)
+            // let totalRAM = os.totalmem()
+            // let totalMem = (totalRAM / (1024 * 1024))
+            // console.log(`Total available RAM: ${totalMem}`)
 
 
-            let freeRAM = os.freemem()
-            let totalFreeMem = (freeRAM / (1024 * 1024))
-            console.log(`Total free system RAM: ${totalFreeMem}`)
+            // let freeRAM = os.freemem()
+            // let totalFreeMem = (freeRAM / (1024 * 1024))
+            // console.log(`Total free system RAM: ${totalFreeMem}`)
         } catch (error) {
         }
     })
