@@ -47,18 +47,9 @@ io.on('connection', (socket) => {
     socket.on('quit-room', (payload) => {
         try {
             console.log('quit triggered')
-            // const { roomName } = payload
-            // socket.leave(`${roomName}`)
-            // socket.close()
-
-            // let totalRAM = os.totalmem()
-            // let totalMem = (totalRAM / (1024 * 1024))
-            // console.log(`Total available RAM: ${totalMem}`)
-
-
-            // let freeRAM = os.freemem()
-            // let totalFreeMem = (freeRAM / (1024 * 1024))
-            // console.log(`Total free system RAM: ${totalFreeMem}`)
+            const { roomName } = payload
+            socket.leave(`${roomName}`)
+            socket.close()
         } catch (error) {
         }
     })
@@ -75,16 +66,16 @@ io.on('connection', (socket) => {
 
     socket.on('update-progress', (payload) => {
         try {
-            const { roomName, progressValue } = payload
-            console.log(payload)
-            let totalRAM = os.totalmem()
-            let totalMem = (totalRAM / (1024 * 1024))
-            console.log(`Total available RAM: ${totalMem}`)
+            const { roomName } = payload
+            // console.log(payload)
+            // let totalRAM = os.totalmem()
+            // let totalMem = (totalRAM / (1024 * 1024))
+            // console.log(`Total available RAM: ${totalMem}`)
 
 
-            let freeRAM = os.freemem()
-            let totalFreeMem = (freeRAM / (1024 * 1024))
-            console.log(`Total free system RAM: ${totalFreeMem}`)
+            // let freeRAM = os.freemem()
+            // let totalFreeMem = (freeRAM / (1024 * 1024))
+            // console.log(`Total free system RAM: ${totalFreeMem}`)
             socket.to(`${roomName}`).emit(`${roomName}-callback`, JSON.stringify({ ...payload }))
         } catch (error) {
             console.log(error)
