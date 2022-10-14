@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
     socket.on('update-progress', (payload) => {
         try {
             const { roomName } = payload
-            // console.log(payload)
+            console.log(payload)
             // let totalRAM = os.totalmem()
             // let totalMem = (totalRAM / (1024 * 1024))
             // console.log(`Total available RAM: ${totalMem}`)
