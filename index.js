@@ -47,6 +47,7 @@ io.on('connection', (socket) => {
         try {
             const { roomName } = payload
             socket.leave(`${roomName}`)
+            socket.close()
         } catch (error) {
         }
     })
