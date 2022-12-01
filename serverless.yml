@@ -57,9 +57,9 @@ functions:
             GROUP_NAME: Radio.Cloud
             GROUP_ID: RC
             OWNER: MAULANA
-            # COMMIT_ID: ${param:ID}
-            # COMMIT_MESSAGE: ${param:MESSAGE}
-            # COMMIT_AUTHOR: ${param:AUTHOR}
+            COMMIT_ID: ${param:ID}
+            COMMIT_MESSAGE: ${param:MESSAGE}
+            COMMIT_AUTHOR: ${param:AUTHOR}
         tags:
             GRUP_NAME: Radio.Cloud
             GROUP_ID: RC
