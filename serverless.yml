@@ -1,0 +1,78 @@
+service: FRA-LAF-RC-Gema-UpdateContent-WSCK-NJS
+configValidationMode: error
+
+
+provider:
+    name: aws
+    stage: v1
+    region: eu-central-1
+    versionFunctions: false
+    runtime: nodejs16.x
+    endpointType: REGIONAL
+    timeout: 2
+    stackName: FRA-CFM-RC-Gema-UpdateContent-WSCK-NJS
+    apiName: FRA-APG-RC-Gema-UpdateContent-REST-NJS
+    apiGateway:
+      description: "RC Gema Update View REST API and WSCK"
+    websocketsApiName: FRA-APG-RC-Gema-UpdateContent-WSCK-NJS
+    websocketsApiRouteSelectionExpression: $request.body.action
+    websocketsDescription: 'RC Gema Update Content View'
+    deploymentPrefix: serverless
+    deploymentBucket:
+        name: fra-s3b-lambda-deployment-bucket
+        maxPreviousDeploymentArtifacts: 5
+        blockPublicAccess: true
+        skipPolicySetup: true
+    s3:
+        bucketOne:
+            name: fra-s3b-lambda-deployment-bucket
+            versioningConfiguration:
+                Status: Enabled
+
+package:
+    individually: true
+    exclude:
+        - ./**
+
+resources:
+  Description: 'RC Gema Update Content View Stack'
+plugins:
+    - serverless-prune-plugin
+
+functions:
+    gemaUpdateView:
+        handler: index.handler
+        description: 'RC AudioBrowser Update Content Notifier'
+        role: arn:aws:iam::731994574120:role/FRA-IAM-GE-Lambda-Execution-Role
+        timeout: 2 # in seconds (API Gateway has a timeout of 29 seconds)
+        name: FRA-LAF-RC-Gema-UpdateContent-WSCK-NJS
+        memorySize: 256
+        logRetentionInDays: 7
+        package:
+          include:
+            - index.js
+        layers:
+            - arn:aws:lambda:eu-central-1:731994574120:layer:gema_npm_lib:1	
+        environment:
+            GROUP_NAME: Radio.Cloud
+            GROUP_ID: RC
+            OWNER: MAULANA
+            # COMMIT_ID: ${param:ID}
+            # COMMIT_MESSAGE: ${param:MESSAGE}
+            # COMMIT_AUTHOR: ${param:AUTHOR}
+        tags:
+            GRUP_NAME: Radio.Cloud
+            GROUP_ID: RC
+            OWNER: MAULANA
+        events:
+            - http:
+                method: get
+                path: gemaUpdateView
+                cors: 
+                    origins: '*'
+            - websocket:
+                route: $connect
+            - websocket:
+                route: $disconnect
+            - websocket:
+                route: $default
