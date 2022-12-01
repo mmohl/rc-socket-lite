@@ -13,7 +13,8 @@ pipelines:
             - echo "Commit id = $COMMIT_ID"
             - echo "Commit message = $COMMIT_MESSAGE"
             - echo "Build Number = $BITBUCKET_BUILD_NUMBER"
-            - echo "Commited user = $COMMIT_AUTHOR"  
+            - echo "Commited user = $COMMIT_AUTHOR" 
+            - serverless install serverless-prune-plugin
             - serverless config credentials --provider aws --key ${AWS_DEV_LAMBDA_KEY} --secret ${AWS_DEV_LAMBDA_SECRET}
             - serverless deploy --param="ID='${COMMIT_ID}'" --param="MESSAGE='${COMMIT_MESSAGE}'" --param="AUTHOR='${COMMIT_AUTHOR}'"
 
