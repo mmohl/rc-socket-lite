@@ -1,0 +1,22 @@
+image: radiocloud/serverless-deployer:1.3
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Deploy Serverless Framework
+          script:
+            - apk add git
+            - export COMMIT_MESSAGE=`git log --format=%B -n 1 $BITBUCKET_COMMIT`
+            - export COMMIT_AUTHOR=`git log $BITBUCKET_COMMIT --pretty=format:'%an' -n 1`
+            - export COMMIT_ID=`echo $BITBUCKET_COMMIT | cut -c1-7`
+            - echo "Commit id = $COMMIT_ID"
+            - echo "Commit message = $COMMIT_MESSAGE"
+            - echo "Build Number = $BITBUCKET_BUILD_NUMBER"
+            - echo "Commited user = $COMMIT_AUTHOR"  
+            - serverless config credentials --provider aws --key ${AWS_DEV_LAMBDA_KEY} --secret ${AWS_DEV_LAMBDA_SECRET}
+            - serverless deploy --param="ID='${COMMIT_ID}'" --param="MESSAGE='${COMMIT_MESSAGE}'" --param="AUTHOR='${COMMIT_AUTHOR}'"
+
+
+
+
