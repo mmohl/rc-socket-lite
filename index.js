@@ -3,14 +3,14 @@ const server = require('http').createServer(app);
 const options = { cors: { origin: '*' } };
 const io = require('/opt/node_modules/socket.io')(server, options);
 const port = process.env.PORT || 3000;
-// const redis = require('socket.io-redis');
+const redis = require('socket.io-redis');
 const os = require('os')
 
 app.get('/', (req, res) => {
     res.json({ message: 'hai' })
 });
 
-// io.adapter(redis(process.env.HEROKU_REDIS_COBALT_URL));
+io.adapter(redis(process.env.HEROKU_REDIS_COBALT_URL));
 
 io.on('connection', (socket) => {
     // console.log(socket?.adapter?.rooms)
