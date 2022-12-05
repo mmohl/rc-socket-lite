@@ -1,7 +1,7 @@
-const app = require('/opt/node_modules/express')();
+const app = require('express')();
 const server = require('http').createServer(app);
 const options = { cors: { origin: '*' } };
-const io = require('/opt/node_modules/socket.io')(server, options);
+const io = require('socket.io')(server, options);
 const port = process.env.PORT || 3000;
 const redis = require('socket.io-redis');
 const os = require('os')
