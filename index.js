@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'hai' })
 });
 
-io.adapter(redis(process.env.HEROKU_REDIS_COBALT_URL));
+io.adapter(redis(process.env.REDIS_TLS_URL));
 
 io.on('connection', (socket) => {
     // console.log(socket?.adapter?.rooms)
