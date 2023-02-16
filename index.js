@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'hai' })
 });
 
-io.adapter(createAdapter(pubClient, subClient));
+// io.adapter(createAdapter(pubClient, subClient));
 
 io.on('connection', (socket) => {
     // console.log(socket?.adapter?.rooms)
