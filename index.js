@@ -3,14 +3,19 @@ const server = require('http').createServer(app);
 const options = { cors: { origin: '*' } };
 const io = require('socket.io')(server, options);
 const port = process.env.PORT || 3000;
-const redis = require('socket.io-redis');
+const redis = require('socket.io-redis')
+const { createClient } = require("redis");
+const { createAdapter } = require("@socket.io/redis-adapter");
 const os = require('os')
+
+const pubClient = createClient({ url: process.env.REDIS_URL });
+const subClient = pubClient.duplicate();
 
 app.get('/', (req, res) => {
     res.json({ message: 'hai' })
 });
 
-io.adapter(redis(process.env.REDIS_URL));
+io.adapter(createAdapter(pubClient, subClient));
 
 io.on('connection', (socket) => {
     // console.log(socket?.adapter?.rooms)
