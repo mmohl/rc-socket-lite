@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 const os = require('os')
 
 // const pubClient = createClient({ url: process.env.REDIS_URL });
-const subClient = pubClient.duplicate();
+// const subClient = subClient.duplicate();
 
 app.get('/', (req, res) => {
     res.json({ message: 'hai' })
