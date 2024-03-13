@@ -1,11 +1,10 @@
+const { Server } = require("socket.io");
 const app = require('express')();
-const server = require('http').createServer(app);
+const { createServer } = require("http");
+const httpServer = createServer(app);
 const options = { cors: { origin: '*' } };
-const io = require('socket.io')(server, options);
+const io = new Server(httpServer, options);
 const port = process.env.PORT || 3000;
-// const redis = require('socket.io-redis')
-// const { createClient } = require("redis");
-// const { createAdapter } = require("@socket.io/redis-adapter");
 const os = require('os')
 
 // const pubClient = createClient({ url: process.env.REDIS_URL });
@@ -87,6 +86,6 @@ io.on('connection', (socket) => {
     })
 });
 
-server.listen(port, () => {
+httpServer.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);
 });
